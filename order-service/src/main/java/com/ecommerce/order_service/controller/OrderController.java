@@ -25,9 +25,7 @@ public class OrderController {
 
     @GetMapping("")
     public ResponseEntity<APIResponse> getAllOrders(Pageable pageable) {
-        //return new ResponseEntity<>(orderService.getAllOrders(), HttpStatus.OK);
         return new ResponseEntity<>(orderService.getAllOrders(pageable), HttpStatus.OK);
     }
-
 
 }

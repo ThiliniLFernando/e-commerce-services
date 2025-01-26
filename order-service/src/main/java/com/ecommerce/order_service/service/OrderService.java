@@ -1,5 +1,6 @@
 package com.ecommerce.order_service.service;
 
+import com.ecommerce.order_service.constants.OrderStatus;
 import com.ecommerce.order_service.dto.APIResponse;
 import com.ecommerce.order_service.dto.OrderDTO;
 import com.ecommerce.order_service.entity.Order;
@@ -31,20 +32,21 @@ public class OrderService {
 
         order.setOrderDate(LocalDateTime.now());
         order.setDeliveryDate(LocalDateTime.now());
-        order.setStatus("active");
+        order.setStatus(OrderStatus.active.name());
 
         order = orderRepository.save(order);
-        System.out.println(order.getOrderDate());
+
         return new APIResponse("Order created successfully", order, true);
     }
 
     public APIResponse getAllOrders() {
-        Optional<List<Order>> orders = orderRepository.findAllByStatus("active");
+        Optional<List<Order>> orders = orderRepository.findAllByStatus(OrderStatus.active.name());
         return new APIResponse("Orders fetched successfully", orders, true);
     }
 
     public APIResponse getAllOrders(Pageable pageable){
-        Page<Order> orders =orderRepository.findAllByStatus(pageable, "active");
+        Page<Order> orders =orderRepository.findAllByStatus(pageable, OrderStatus.active.name());
         return new APIResponse("Orders fetched successfully", orders, true);
     }
+
 }
